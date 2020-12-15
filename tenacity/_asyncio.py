@@ -72,13 +72,18 @@ class AsyncRetrying(BaseRetrying):
                 return do
 
     def wraps(self, fn):
+        '''
+        return an `async def` function to make it 
+        pass both inspect.iscoroutinefunction and
+                  asyncio.iscoroutinefunction
+        '''
         fn = super().wraps(fn)
         # Ensure wrapper is recognized as a coroutine function.
 
         async def async_wrapped(*args, **kwargs):
             return await fn(*args, **kwargs)
 
-        # Preserve attributes
+        # Preserve attributes that sets in BaseRetrying.wraps
         async_wrapped.retry = fn.retry
         async_wrapped.retry_with = fn.retry_with
 

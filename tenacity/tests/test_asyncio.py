@@ -83,6 +83,7 @@ class TestAsync(unittest.TestCase):
         repr(tasyncio.AsyncRetrying())
 
     def test_retry_attributes(self):
+        # ensure retryable_coroutine attributes
         assert hasattr(_retryable_coroutine, 'retry')
         assert hasattr(_retryable_coroutine, 'retry_with')
 
